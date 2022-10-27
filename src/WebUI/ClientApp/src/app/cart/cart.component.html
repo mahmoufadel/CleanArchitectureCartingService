@@ -1,0 +1,71 @@
+<h1>Cart</h1>
+
+<p>This is a complex Cart component.</p>
+
+<p *ngIf="!lists"><em>Loading...</em></p>
+
+<div *ngIf="lists">
+
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="clearfix">
+        <h2 class="float-start">Lists</h2>
+        
+      </div>
+      <ul class="list-group">
+        <li *ngFor="let list of lists; index as i" class="list-group-item"
+          [ngClass]="{ 'active': selectedList == list }" (click)="selectedList = list">
+          <div class="clearfix">
+            <div class="float-start">
+              {{ list.created }}
+            </div>
+            <div class="float-end text-right">
+              <span class="badge badge-light">13132</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-8" *ngIf="selectedList">
+      <div class="clearfix">
+        <h2 class="float-start">{{ selectedList.id }}</h2>
+        <button id="listOptions" class="btn btn-default float-end" title="List Options..."
+          >
+          <i class="bi bi-three-dots-vertical"></i>
+        </button>
+      </div>
+      <ul id="todo-items" class="list-group mb-2">
+        <li class="list-group-item" *ngFor="let item of selectedList.items; index as i">
+          <div class="d-flex">
+            <div class="todo-item-checkbox">
+              
+            </div>
+            <div class="flex-fill">   
+                <div class="todo-item-title" style="float: left;" class="form-control" style="padding: 10px">
+                    
+                    <img src="{{item.image.url}}"  width="200px"  alt="{{item.image.altText}}">
+                   
+
+                    <div class="align-middle" >{{ item.name }}</div>
+                    <div class="align-middle">{{ item.price.amount }} - {{item.price.currency}}</div>
+                    <div class="justify-content-center">{{ item.quantity }}</div>
+                  </div>             
+               
+              </div>
+            <div class="todo-item-commands">
+             
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item" (click)="addItem()">
+          <button class="btn btn-default">Add Item...</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="debug">
+  <pre>{{ lists | json }}</pre>
+</div>
+
