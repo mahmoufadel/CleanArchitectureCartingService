@@ -25,7 +25,7 @@ export class CartComponent implements OnInit {
   constructor( private listsClient: CartsClient,) { }
  
   ngOnInit(): void {
-    this.listsClient.get().subscribe(
+    this.listsClient.getAll().subscribe(
       result => {
         this.lists = result.lists;
         

@@ -13,5 +13,6 @@ public class CartDto : IMapFrom<Cart>
 
     public Guid Id { get; set; }
     public DateTime Created { get; set; }
+    public DateTime Updated { get; set; }
     public IList<CartItemDto> Items { get; set; }
 }

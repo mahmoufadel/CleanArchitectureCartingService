@@ -9,9 +9,12 @@ public interface IApplicationDbContext
 
     DbSet<TodoItem> TodoItems { get; }
 
-   
+    DbSet<Category> Categories { get; }
+
+    DbSet<Product> Products { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+    
 }
 
 public interface IApplicationNoSQLDbContext

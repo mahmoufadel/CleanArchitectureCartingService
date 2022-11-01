@@ -9,13 +9,21 @@ namespace CleanArchitecture.WebUI.Controllers;
 
 public class CartsController : ApiControllerBase
 {
+    [HttpGet("GetItem/{id}")]
+    public async Task<ActionResult<CartDto>> GetItem(Guid id)
+    {
+        return await Mediator.Send(new GetCartQuery(id));
+    }
+
     [HttpGet]
-    public async Task<ActionResult<CartsVm>> Get()
+    [Route("All")]
+    public async Task<ActionResult<CartsVm>> GetAll()
     {
         return await Mediator.Send(new GetCartsQuery());
     }
 
     [HttpPost]
+    [Route("")]
     public async Task<ActionResult<Guid>> Create(CreateCartCommand command)
     {
         return await Mediator.Send(command);
@@ -29,4 +37,21 @@ public class CartsController : ApiControllerBase
         return NoContent();
     }
 
+    [HttpDelete]
+    [Route("DeleteItem")]
+    public async Task<ActionResult> DeleteItem(RemoveItemFromCartCommand removeItemFromCartCommand)
+    {
+        await Mediator.Send(removeItemFromCartCommand);
+
+        return NoContent();
+    }
+
+    [HttpPost]
+    [Route("AddItem")]
+    public async Task<ActionResult<Guid>> AddItem(AddItemToCartCommand addItemToCartCommand)
+    {
+        return await Mediator.Send(addItemToCartCommand);
+
+        
+    }
 }

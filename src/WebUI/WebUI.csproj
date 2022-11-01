@@ -59,7 +59,7 @@
     </PropertyGroup>
 
     <Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
-        <Exec WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Net60) run nswag.json " />
+       
     </Target>
     
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">

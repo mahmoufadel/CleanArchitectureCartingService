@@ -12,7 +12,7 @@ export const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'counter', component: CounterComponent },
   { path: 'fetch-data', component: FetchDataComponent },
-  { path: 'todo', component: TodoComponent, canActivate: [AuthorizeGuard] },
+  { path: 'todo', component: TodoComponent },
   { path: 'cart', component: CartComponent },
   { path: 'token', component: TokenComponent, canActivate: [AuthorizeGuard] }
 ];

@@ -1,37 +1,30 @@
-﻿using System.Xml;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
+﻿using AutoMapper;
+using CleanArchitecture.Application.Common.Exceptions;
 using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Application.Common.Security;
-using CleanArchitecture.Application.TodoLists.Queries.GetTodos;
 using CleanArchitecture.Domain.Entities;
-using CleanArchitecture.Domain.Enums;
-using LiteDB;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Application.Carts.Queries.GetCarts;
 
-public record GetCartsQuery : IRequest<CartsVm>;
+public record GetCartQuery(Guid Id) : IRequest<CartDto>;
 
-public class GetCartsQueryHandler : IRequestHandler<GetCartsQuery, CartsVm>
+public class GetCartQueryHandler : IRequestHandler<GetCartQuery, CartDto>
 {
     private readonly IApplicationNoSQLDbContext _context;
     private readonly IMapper _mapper;
-    
-    public GetCartsQueryHandler(IApplicationNoSQLDbContext context, IMapper mapper)
+
+    public GetCartQueryHandler(IApplicationNoSQLDbContext context, IMapper mapper)
     {
         _context = context;
         _mapper = mapper;
     }
 
-    public async Task<CartsVm> Handle(GetCartsQuery request, CancellationToken cancellationToken)
+    public async Task<CartDto> Handle(GetCartQuery request, CancellationToken cancellationToken)
     {
-       // _context.Carts.DeleteAll();
-        var items = _context.Carts.Query().ToList();
-        return new CartsVm
-        {
-            Lists = _mapper.Map<List<CartDto>>(items)
-        };
+        var entity = _context.Carts.FindById(request.Id);
+        return _mapper.Map<CartDto>(entity);
+
+
     }
 }

@@ -13,6 +13,7 @@ public class Cart
     }
     public Guid Id { get; set; }
     public DateTime Created { get; set; }
+    public DateTime Updated { get; set; }
 
     public string? CreatedBy { get; set; }
 
