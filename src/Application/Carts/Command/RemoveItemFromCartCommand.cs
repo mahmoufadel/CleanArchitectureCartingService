@@ -8,7 +8,7 @@ namespace CleanArchitecture.Application.Carts.Commands;
 public record RemoveItemFromCartCommand : IRequest<Guid>
 {
     public Guid Id  { get; init; }
-    public Guid ListId { get; init; }
+    public Guid CartId { get; init; }
 }
 
 public class RemoveItemFromCartCommandHandler : IRequestHandler<RemoveItemFromCartCommand, Guid>
@@ -22,10 +22,10 @@ public class RemoveItemFromCartCommandHandler : IRequestHandler<RemoveItemFromCa
 
     public async Task<Guid> Handle(RemoveItemFromCartCommand request, CancellationToken cancellationToken)
     {
-        var entity = _context.Carts.FindById(request.ListId);
+        var entity = _context.Carts.FindById(request.CartId);
         if (entity == null)
         {
-            throw new NotFoundException(nameof(Cart), request.ListId);
+            throw new NotFoundException(nameof(Cart), request.CartId);
         }
         entity.Updated = DateTime.Now;
         entity.Items.Remove(entity.Items.First(item=> item.Id==request.Id));

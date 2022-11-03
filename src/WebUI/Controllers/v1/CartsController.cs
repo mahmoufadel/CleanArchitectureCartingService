@@ -6,17 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.WebUI.Controllers;
 
-
+[Route("api/v{version:apiVersion}/[controller]")]
+[ApiVersion("1.0")]
 public class CartsController : ApiControllerBase
 {
-    [HttpGet("GetItem/{id}")]
+    [HttpGet("{id:guid}")]
     public async Task<ActionResult<CartDto>> GetItem(Guid id)
     {
         return await Mediator.Send(new GetCartQuery(id));
     }
 
-    [HttpGet]
-    [Route("All")]
+    [HttpGet]   
     public async Task<ActionResult<CartsVm>> GetAll()
     {
         return await Mediator.Send(new GetCartsQuery());
@@ -37,17 +37,15 @@ public class CartsController : ApiControllerBase
         return NoContent();
     }
 
-    [HttpDelete]
-    [Route("DeleteItem")]
-    public async Task<ActionResult> DeleteItem(RemoveItemFromCartCommand removeItemFromCartCommand)
+    [HttpDelete ("{cartId}/items/{id}")]    
+    public async Task<ActionResult> DeleteItem([FromRoute] Guid cartId, [FromRoute] Guid id)
     {
-        await Mediator.Send(removeItemFromCartCommand);
+        await Mediator.Send(new RemoveItemFromCartCommand { Id = id, CartId = cartId });
 
         return NoContent();
     }
 
-    [HttpPost]
-    [Route("AddItem")]
+    [HttpPost("{cartId}/items/")]
     public async Task<ActionResult<Guid>> AddItem(AddItemToCartCommand addItemToCartCommand)
     {
         return await Mediator.Send(addItemToCartCommand);
