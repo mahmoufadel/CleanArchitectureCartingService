@@ -14,8 +14,10 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
     public void Configure(EntityTypeBuilder<Product> builder)
     {
        builder.Property(t => t.Name).HasMaxLength(50).IsRequired();
-        
-       builder.OwnsOne(product => product.Price,
+       builder.Property(t=>t.Category).IsRequired();
+       
+
+        builder.OwnsOne(product => product.Price,
                         navigationBuilder =>
                         {
                             navigationBuilder.Property(price => price.Amount).HasColumnName("Amount");

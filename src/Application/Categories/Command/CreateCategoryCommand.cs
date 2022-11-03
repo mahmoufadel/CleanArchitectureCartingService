@@ -2,7 +2,6 @@
 using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Domain.ValueObjects;
 using MediatR;
-
 namespace CleanArchitecture.Application.Categories.Commands;
 
 public record CreateCategoryCommand : IRequest<Guid>

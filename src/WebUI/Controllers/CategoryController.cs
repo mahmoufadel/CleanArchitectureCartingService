@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using CleanArchitecture.Application.Categories.Queries;
 using CleanArchitecture.Application.Categories.Commands;
+
 namespace CleanArchitecture.WebUI.Controllers;
 
 
@@ -25,9 +26,9 @@ public class CategorysController : ApiControllerBase
     {
         return await Mediator.Send(command);
     }
-    /*
+    
     [HttpPut("{id}")]
-    public async Task<ActionResult> Update(int id, UpdateCategoryCommand command)
+    public async Task<ActionResult> Update(Guid id, UpdateCategoryCommand command)
     {
         if (id != command.Id)
         {
@@ -40,10 +41,19 @@ public class CategorysController : ApiControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<ActionResult> Delete(int id)
+    public async Task<ActionResult> Delete(Guid id)
     {
         await Mediator.Send(new DeleteCategoryCommand(id));
 
         return NoContent();
-    }*/
+    }
+
+    /*
+     List of Items (filtration by category id and pagination)
+Add category
+Add item
+Update category
+Update item
+Delete Item
+Delete category (with the related items)*/
 }
