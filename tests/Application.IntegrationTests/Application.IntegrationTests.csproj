@@ -21,6 +21,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoFixture" Version="4.17.0" />
+        <PackageReference Include="AutoFixture.AutoMoq" Version="4.17.0" />
+        <PackageReference Include="AutoFixture.Idioms" Version="4.17.0" />
+        <PackageReference Include="AutoFixture.NUnit3" Version="4.17.0" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.0-rc.2.22476.2" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.2" />
         <PackageReference Include="nunit" Version="3.13.3" />
@@ -35,6 +39,10 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\WebUI\WebUI.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Carts\Queries\" />
     </ItemGroup>
 
 </Project>

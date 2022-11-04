@@ -1,14 +1,20 @@
 ﻿using CleanArchitecture.Application.Common.Mappings;
 using CleanArchitecture.Domain.Entities;
+using CleanArchitecture.Domain.ValueObjects;
+
 namespace CleanArchitecture.Application.Products.Queries;
 
 public class ProductBriefDto : IMapFrom<Product>
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
+    public Guid CategoryId { get; set; }
 
-    public int ListId { get; set; }
 
-    public string? Title { get; set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
+    public string Image { get; set; }
+    public Money Price { get; set; }
+    public int Amount { get; set; }
 
-    public bool Done { get; set; }
+   
 }

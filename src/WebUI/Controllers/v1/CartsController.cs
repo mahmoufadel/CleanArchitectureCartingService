@@ -8,9 +8,11 @@ namespace CleanArchitecture.WebUI.Controllers;
 
 [Route("api/v{version:apiVersion}/[controller]")]
 [ApiVersion("1.0")]
+[ApiVersion("2.0")]
 public class CartsController : ApiControllerBase
 {
     [HttpGet("{id:guid}")]
+    [MapToApiVersion("1.0")]
     public async Task<ActionResult<CartDto>> GetItem(Guid id)
     {
         return await Mediator.Send(new GetCartQuery(id));
