@@ -5,7 +5,7 @@ using Image = CleanArchitecture.Domain.ValueObjects.Image;
 
 namespace CleanArchitecture.Domain.Entities;
 
-public class Cart 
+public class Cart : BaseEventEntity
 {
     public Cart()
     {

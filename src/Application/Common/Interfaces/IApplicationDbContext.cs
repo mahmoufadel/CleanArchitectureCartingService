@@ -1,6 +1,8 @@
 ﻿using CleanArchitecture.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using LiteDB;
+using CleanArchitecture.Domain.Common;
+
 namespace CleanArchitecture.Application.Common.Interfaces;
 
 public interface IApplicationDbContext
@@ -20,5 +22,7 @@ public interface IApplicationDbContext
 public interface IApplicationNoSQLDbContext
 {
     ILiteCollection<Cart> Carts { get; }
-     
+    Task PublishEvent(BaseEvent @event);
+
+
 }
