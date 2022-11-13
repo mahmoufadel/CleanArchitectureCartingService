@@ -3,9 +3,8 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Linq;
 using System.Text;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace RabittmqConsumer;
+namespace RabittmqConsumer2;
 
 public static class RabittmqConsumerInit
 {
@@ -30,7 +29,7 @@ public static class RabittmqConsumerInit
             var body = ea.Body.ToArray();
             var message = Encoding.UTF8.GetString(body);
 
-            Console.WriteLine("Message Get " + message );
+            Console.WriteLine("RabittmqConsumer2 >> Message Get " + message );
             await Task.Yield();
         };
 
