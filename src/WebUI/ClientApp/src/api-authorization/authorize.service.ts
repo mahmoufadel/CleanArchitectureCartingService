@@ -173,7 +173,7 @@ export class AuthorizeService {
     if (this.userManager !== undefined) {
       return;
     }
-
+debugger;
     console.log(ApplicationPaths.ApiAuthorizationClientConfigurationUrl);
     const response = await fetch(ApplicationPaths.ApiAuthorizationClientConfigurationUrl);
     if (!response.ok) {

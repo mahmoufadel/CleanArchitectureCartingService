@@ -1,0 +1,34 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/api/Categorys",
+      "DownstreamScheme": "https",
+      
+      "UpstreamPathTemplate": "/Categorys",
+      "UpstreamHttpMethod": [ "Get","Post" ],
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7268
+        }
+      ]
+    },    
+    {
+      "DownstreamPathTemplate": "api/v{version}/Carts",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7269
+        }
+      ],
+      "UpstreamPathTemplate": "/carts",
+      "UpstreamHttpMethod": [ "Get", "Post" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "RequestIdKey": "OcRequestId",
+    "AdministrationPath": "/administration"
+  }
+}
+

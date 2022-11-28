@@ -1,7 +1,9 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
+﻿using System.Data;
+using CleanArchitecture.Application.Common.Interfaces;
 using CleanArchitecture.Application.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanArchitecture.Infrastructure.Identity;
@@ -11,15 +13,18 @@ public class IdentityService : IIdentityService
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly IUserClaimsPrincipalFactory<ApplicationUser> _userClaimsPrincipalFactory;
     private readonly IAuthorizationService _authorizationService;
+    private readonly RoleManager<IdentityRole> _roleManager;
 
     public IdentityService(
         UserManager<ApplicationUser> userManager,
         IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory,
-        IAuthorizationService authorizationService)
+        IAuthorizationService authorizationService,
+        RoleManager<IdentityRole> roleManager)
     {
         _userManager = userManager;
         _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
         _authorizationService = authorizationService;
+        _roleManager = roleManager;
     }
 
     public async Task<string> GetUserNameAsync(string userId)
@@ -77,5 +82,34 @@ public class IdentityService : IIdentityService
         var result = await _userManager.DeleteAsync(user);
 
         return result.ToApplicationResult();
+    }
+
+    public async Task<bool> AddRoleAsync(string RoleName)
+    {
+        // Default roles
+        var role = new IdentityRole(RoleName);
+
+        if (_roleManager.Roles.All(r => r.Name != role.Name))
+        {
+            var result=await _roleManager.CreateAsync(role);
+            return result.Succeeded;
+        }
+        return false;
+       
+        
+    }
+    public async Task<bool> AddUserToRoleAsync(string RoleName, string UserId) 
+    {
+        var role = _roleManager.Roles.All(r => r.Name != RoleName);
+
+        var user = _userManager.Users.SingleOrDefault(u => u.Id == UserId);
+
+        if (user == null || !role )
+        {
+            return false;
+        }
+         await _userManager.AddToRolesAsync(user, new[] { RoleName });
+
+        return true;
     }
 }

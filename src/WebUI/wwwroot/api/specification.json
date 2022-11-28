@@ -6,70 +6,36 @@
     "version": "1.0.0"
   },
   "paths": {
-    "/api/Carts/GetItem/{id}": {
+    "/api/Categorys": {
       "get": {
         "tags": [
-          "Carts"
+          "Categorys"
         ],
-        "operationId": "Carts_GetItem",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "guid"
-            },
-            "x-position": 1
-          }
-        ],
+        "operationId": "Categorys_Get",
         "responses": {
           "200": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CartDto"
+                  "$ref": "#/components/schemas/CategoriesVm"
                 }
               }
             }
           }
         }
-      }
-    },
-    "/api/Carts/All": {
-      "get": {
-        "tags": [
-          "Carts"
-        ],
-        "operationId": "Carts_GetAll",
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CartsVm"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/Carts": {
+      },
       "post": {
         "tags": [
-          "Carts"
+          "Categorys"
         ],
-        "operationId": "Carts_Create",
+        "operationId": "Categorys_Create",
         "requestBody": {
           "x-name": "command",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CreateCartCommand"
+                "$ref": "#/components/schemas/CreateCategoryCommand"
               }
             }
           },
@@ -91,12 +57,85 @@
         }
       }
     },
-    "/api/Carts/{id}": {
+    "/api/Categorys/{id}": {
+      "get": {
+        "tags": [
+          "Categorys"
+        ],
+        "operationId": "Categorys_Get2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoryDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Categorys"
+        ],
+        "operationId": "Categorys_Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCategoryCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      },
       "delete": {
         "tags": [
-          "Carts"
+          "Categorys"
         ],
-        "operationId": "Carts_Delete",
+        "operationId": "Categorys_Delete",
         "parameters": [
           {
             "name": "id",
@@ -124,24 +163,147 @@
         }
       }
     },
-    "/api/Carts/DeleteItem": {
-      "delete": {
+    "/api/Products": {
+      "get": {
         "tags": [
-          "Carts"
+          "Products"
         ],
-        "operationId": "Carts_DeleteItem",
+        "operationId": "Products_GetProductsWithPagination",
+        "parameters": [
+          {
+            "name": "CategoryId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "PageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaginatedListOfProductDto"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "operationId": "Products_Create",
         "requestBody": {
-          "x-name": "removeItemFromCartCommand",
+          "x-name": "command",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RemoveItemFromCartCommand"
+                "$ref": "#/components/schemas/CreateProductCommand"
               }
             }
           },
           "required": true,
           "x-position": 1
         },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "guid"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Products/{id}": {
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "operationId": "Products_Update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateProductCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "operationId": "Products_Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
         "responses": {
           "200": {
             "description": "",
@@ -157,18 +319,18 @@
         }
       }
     },
-    "/api/Carts/AddItem": {
+    "/api/Roles": {
       "post": {
         "tags": [
-          "Carts"
+          "Roles"
         ],
-        "operationId": "Carts_AddItem",
+        "operationId": "Roles_Create",
         "requestBody": {
-          "x-name": "addItemToCartCommand",
+          "x-name": "createRole",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AddItemToCartCommand"
+                "$ref": "#/components/schemas/CreateRoleCommand"
               }
             }
           },
@@ -181,8 +343,49 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string",
-                  "format": "guid"
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Roles/{roleid}/users/{userid}": {
+      "post": {
+        "tags": [
+          "Roles"
+        ],
+        "operationId": "Roles_AddUserToRole",
+        "parameters": [
+          {
+            "name": "roleid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 1
+          },
+          {
+            "name": "userid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
                 }
               }
             }
@@ -236,12 +439,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        }
       },
       "post": {
         "tags": [
@@ -272,12 +470,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        }
       }
     },
     "/api/TodoItems/{id}": {
@@ -322,12 +515,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        }
       },
       "delete": {
         "tags": [
@@ -358,12 +546,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        }
       }
     },
     "/api/TodoItems/UpdateItemDetails": {
@@ -407,12 +590,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWT": []
-          }
-        ]
+        }
       }
     },
     "/api/TodoLists": {
@@ -573,6 +751,339 @@
         }
       }
     },
+    "/api/Users": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "operationId": "Users_Create",
+        "requestBody": {
+          "x-name": "userCommand",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValueTupleOfResultAndString"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v{version}/Carts/{id}": {
+      "get": {
+        "tags": [
+          "Carts"
+        ],
+        "operationId": "Carts_GetItem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartDto"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Administrator"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Carts"
+        ],
+        "operationId": "Carts_Delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Administrator"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v{version}/Carts": {
+      "get": {
+        "tags": [
+          "Carts"
+        ],
+        "operationId": "Carts_GetAll",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CartsVm"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Administrator"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Carts"
+        ],
+        "operationId": "Carts_Create",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 2
+          }
+        ],
+        "requestBody": {
+          "x-name": "command",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCartCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "guid"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Administrator"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v{version}/Carts/{cartId}/items/{id}": {
+      "delete": {
+        "tags": [
+          "Carts"
+        ],
+        "operationId": "Carts_DeleteItem",
+        "parameters": [
+          {
+            "name": "cartId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Administrator"
+            ]
+          }
+        ]
+      }
+    },
+    "/api/v{version}/Carts/{cartId}/items": {
+      "post": {
+        "tags": [
+          "Carts"
+        ],
+        "operationId": "Carts_AddItem",
+        "parameters": [
+          {
+            "name": "version",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 2
+          },
+          {
+            "name": "cartId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "x-position": 3
+          }
+        ],
+        "requestBody": {
+          "x-name": "addItemToCartCommand",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddItemToCartCommand"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "format": "guid"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWT": [
+              "Administrator"
+            ]
+          }
+        ]
+      }
+    },
     "/api/WeatherForecast": {
       "get": {
         "tags": [
@@ -599,7 +1110,19 @@
   },
   "components": {
     "schemas": {
-      "CartDto": {
+      "CategoriesVm": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "lists": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CategoryDto"
+            }
+          }
+        }
+      },
+      "CategoryDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -615,15 +1138,15 @@
             "type": "string",
             "format": "date-time"
           },
-          "items": {
+          "products": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/CartItemDto"
+              "$ref": "#/components/schemas/ProductDto"
             }
           }
         }
       },
-      "CartItemDto": {
+      "ProductDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -631,7 +1154,7 @@
             "type": "string",
             "format": "guid"
           },
-          "listId": {
+          "categoryId": {
             "type": "string",
             "format": "guid"
           },
@@ -639,26 +1162,14 @@
             "type": "string"
           },
           "image": {
-            "$ref": "#/components/schemas/Image"
+            "type": "string"
           },
           "price": {
             "$ref": "#/components/schemas/Money"
           },
-          "quantity": {
+          "amount": {
             "type": "integer",
             "format": "int32"
-          }
-        }
-      },
-      "Image": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "altText": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string"
           }
         }
       },
@@ -675,35 +1186,7 @@
           }
         }
       },
-      "CartsVm": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "lists": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CartDto"
-            }
-          }
-        }
-      },
-      "CreateCartCommand": {
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "guid"
-          },
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/CartItem"
-            }
-          }
-        }
-      },
-      "CartItem": {
+      "CreateCategoryCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -715,18 +1198,11 @@
             "type": "string"
           },
           "image": {
-            "$ref": "#/components/schemas/Image"
-          },
-          "price": {
-            "$ref": "#/components/schemas/Money"
-          },
-          "quantity": {
-            "type": "integer",
-            "format": "int32"
+            "type": "string"
           }
         }
       },
-      "RemoveItemFromCartCommand": {
+      "UpdateCategoryCommand": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -734,22 +1210,107 @@
             "type": "string",
             "format": "guid"
           },
-          "listId": {
-            "type": "string",
-            "format": "guid"
+          "name": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
           }
         }
       },
-      "AddItemToCartCommand": {
+      "PaginatedListOfProductDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "listId": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductDto"
+            }
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "CreateProductCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
             "type": "string",
             "format": "guid"
           },
-          "item": {
-            "$ref": "#/components/schemas/CartItem"
+          "categoryId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "price": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "amount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "UpdateProductCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "categoryId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "price": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "amount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "CreateRoleCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "type": "string"
           }
         }
       },
@@ -978,6 +1539,168 @@
           "title": {
             "type": "string",
             "nullable": true
+          }
+        }
+      },
+      "ValueTupleOfResultAndString": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "item1": {
+            "$ref": "#/components/schemas/Result"
+          },
+          "item2": {
+            "type": "string"
+          }
+        }
+      },
+      "Result": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "succeeded": {
+            "type": "boolean"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "CreateUserCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "CartDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartItemDto"
+            }
+          }
+        }
+      },
+      "CartItemDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "price": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Image": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "altText": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "CartsVm": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "lists": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartDto"
+            }
+          }
+        }
+      },
+      "CreateCartCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CartItem"
+            }
+          }
+        }
+      },
+      "CartItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "guid"
+          },
+          "name": {
+            "type": "string"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Image"
+          },
+          "price": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "AddItemToCartCommand": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "listId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "item": {
+            "$ref": "#/components/schemas/CartItem"
           }
         }
       },
