@@ -7,14 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="HotChocolate.AspNetCore" Version="12.15.2" />
+    <PackageReference Include="HotChocolate.AspNetCore.Authorization" Version="12.15.2" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
-    <PackageReference Include="Ocelot" Version="18.0.0" />
-      <PackageReference Include="GraphQL" Version="7.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Infrastructure\Infrastructure.csproj" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
-
+    <ItemGroup>
+        <ProjectReference Include="..\src\Application\Application.csproj" />
+        <ProjectReference Include="..\src\Infrastructure\Infrastructure.csproj" />
+    </ItemGroup>
 </Project>

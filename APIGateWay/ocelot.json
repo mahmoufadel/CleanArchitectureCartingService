@@ -12,9 +12,9 @@
           "Port": 7268
         }
       ]
-    },    
+    },
     {
-      "DownstreamPathTemplate": "api/v{version}/Carts",
+      "DownstreamPathTemplate": "/api/v{version}/Carts",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -24,6 +24,20 @@
       ],
       "UpstreamPathTemplate": "/carts",
       "UpstreamHttpMethod": [ "Get", "Post" ]
+    },
+    {
+      "DownstreamPathTemplate": "/graphql",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "yourgraphqlhost.com",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/graphql",
+      "DelegatingHandlers": [
+        "GraphQlDelegatingHandler"
+      ]
     }
   ],
   "GlobalConfiguration": {

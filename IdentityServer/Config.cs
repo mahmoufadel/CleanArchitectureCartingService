@@ -24,9 +24,13 @@ public static class Config
     public static IEnumerable<Client> Clients =>
         new Client[]
          {
+             new Client{ ClientId = "graphql",
+                 AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,            
+                 ClientSecrets = { new Secret("78195A38-7267-7267-8F2E-8F4EB3FECF34".Sha256()) },            
+                 AllowedScopes = {  "openid", "profile", "api1", "roles" } },
              new Client{ ClientId = "catelog",
-                 AllowedGrantTypes = GrantTypes.ClientCredentials,            
-                 ClientSecrets = { new Secret("78195A38-7268-7268-8F2E-8F4EB3FECF34".Sha256()) },            
+                 AllowedGrantTypes = GrantTypes.ClientCredentials,
+                 ClientSecrets = { new Secret("78195A38-7268-7268-8F2E-8F4EB3FECF34".Sha256()) },
                  AllowedScopes = {  "openid", "profile", "api1", "roles" } },
              new Client{ ClientId = "cart", 
                  AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,  

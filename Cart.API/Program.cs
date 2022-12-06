@@ -17,6 +17,8 @@ builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddLiteDb(@"carting.db");
 builder.Services.AddWebUIServices(builder.Configuration);
+builder.Services.AddApplicationInsightsTelemetry();
+
 
 builder.Services.AddApiVersioning(options =>
 {

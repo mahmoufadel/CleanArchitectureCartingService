@@ -43,8 +43,7 @@ public sealed class ProfileService : IProfileService
                 IList<string> roles = await _userMgr.GetRolesAsync(user);
                 foreach (var roleName in roles)
                 {
-                    claims.Add(new Claim(JwtClaimTypes.Role, roleName));
-                    claims.Add(new Claim("roles", roleName));
+                    claims.Add(new Claim(JwtClaimTypes.Role, roleName));                   
                 if (_roleMgr.SupportsRoleClaims)
                     {
                         IdentityRole role = await _roleMgr.FindByNameAsync(roleName);
