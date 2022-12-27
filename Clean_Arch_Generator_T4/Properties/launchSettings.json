@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Clean_Arch_Generator_T4": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:59245;http://localhost:59246"
+    }
+  }
+}

@@ -1,0 +1,124 @@
+﻿<#@ template language="C#" debug="true" hostspecific="true" #>
+<#@ output extension=".txt" #>
+<#@ assembly name="System" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Data.Entity" #>
+<#@ assembly name="EnvDTE" #>
+<#@ import namespace="EnvDTE" #>
+<#@ include file="T4Helper.ttinclude" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Reflection" #>
+
+<#  
+    ////////////////////////////////////////////////////////
+    // Get defined Entities details and DbContext details //
+    ////////////////////////////////////////////////////////
+    string EntityNamespace = "Domain.Entities";
+    string DbContextNamespace = "Persistence.Context";
+    string efContext = "ApplicationDbContext";
+
+    IServiceProvider serviceProvider = (IServiceProvider)this.Host;
+    DTE dte = serviceProvider.GetService(typeof(DTE)) as DTE; 
+    var project1 = FindProjectByName(dte, "Domain");
+    var classes = FindClasses(project1, EntityNamespace, "");
+    var classNames = classes .Select(currentClass => currentClass.Name) .ToList();
+    var project2 = FindProjectByName(dte, "Persistence");
+    var dbcclass = FindClasses(project2, DbContextNamespace, "");
+    var classWithDbContext = dbcclass.FirstOrDefault(currentClass => currentClass.Bases.OfType<CodeElement>().Any(currentBase => currentBase.Name == "DbContext"));
+    if(classWithDbContext != null)
+    {
+        efContext = classWithDbContext.Name;
+    }
+    
+
+#>
+
+<#foreach(string className in classNames)
+{
+    
+    var properClassName = GetProperClassName(className);
+    var repositoryName =  properClassName + "Repository";
+    var AddCommand =      "Add" + properClassName + "Command";
+    
+    string keyType="string";
+    //(var keyType, var key, var keyValue, var checkKeyEqual, var entityKeys, var entityValue, var httpKeys, var asprouteItem, var asprouteModel, var aspfors)    = GetKeyAndTypeStrings(dte,project1,EntityNamespace+"."+properClassName);
+#>
+/////////////////////////////////////////
+// generated <#= AddCommand #>.cs //
+/////////////////////////////////////////
+using Domain.Entities;
+using AutoMapper;
+using Application.Common.Interfaces;
+using Domain.Events;
+using MediatR;
+
+namespace Application.<#= properClassName #>.Commands;
+
+public record <#= AddCommand #> : IRequest<Guid>
+{
+    public Guid Id  { get; init; }
+    
+}
+
+public class <#= AddCommand #>Handler : IRequestHandler<<#= AddCommand #>, Guid>
+{
+    private readonly IApplicationDbContext _context;
+
+    public Remove<#= properClassName #>CommandHandler(IApplicationDbContext context)
+    {
+        _context = context;
+    }
+
+    public async Task<Guid> Handle(<#= AddCommand #> request, CancellationToken cancellationToken)
+    {
+        var entity = _mapper.Map<<#= properClassName #>>(request);
+
+        entity.AddDomainEvent(new <#= properClassName #>CreatedEvent(entity));
+
+        _context.<#= properClassName #>s.Add(entity);
+
+        await _context.SaveChangesAsync(cancellationToken);
+
+        return entity.Id;     
+    }
+}
+    
+
+<# CreateFile("Application", "Services/"+properClassName+"/Commands/"+AddCommand, AddCommand+".cs"); #>
+/////////////////////////////////////////
+// generated <#= AddCommand #>.cs //
+/////////////////////////////////////////
+
+using FluentValidation;
+namespace Application.<#= properClassName #>.Commands;
+public class <#= AddCommand #>Validator : AbstractValidator<<#= AddCommand #>>
+{
+    public <#= AddCommand #>Validator()
+    {
+        RuleFor(v => v.Title) .MaximumLength(200).NotEmpty();
+    }
+}
+
+<# CreateFile("Application", "Services/"+properClassName+"/Commands/"+AddCommand, AddCommand+"Validator.cs"); #>
+
+using Domain.Entities;
+namespace Domain.Events;
+
+public class <#= properClassName #>CreatedEvent : BaseEvent
+{
+    public <#= properClassName #>CreatedEvent(<#= properClassName #> item)
+    {
+        Item = item;
+    }
+
+    public <#= properClassName #> Item { get; }
+}
+
+<# CreateFile("Domain", "Events/"+properClassName, properClassName+"CreatedEvent.cs"); #>
+<#
+}
+#>
+

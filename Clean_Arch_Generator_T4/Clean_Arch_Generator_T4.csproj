@@ -1,0 +1,75 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Clean Architecture Database Access Generator.tt" />
+    <None Remove="Clean Architecture WebAPI Generator.tt" />
+    <None Remove="Clean Architecture WebMVC Generator.tt" />
+    <None Remove="Create.tt" />
+    <None Remove="T4Helper.ttinclude" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Clean Architecture Database Access Generator.tt">
+      <LastGenOutput>Clean Architecture Database Access Generator.txt</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </Content>
+    <Content Include="Clean Architecture WebAPI Generator.tt">
+      <LastGenOutput>Clean Architecture WebAPI Generator.txt</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </Content>
+    <Content Include="Clean Architecture WebMVC Generator.tt">
+      <LastGenOutput>Clean Architecture WebMVC Generator.txt</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </Content>
+    <Content Include="Create.tt">
+      <LastGenOutput>Create.txt</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </Content>
+    <Content Include="T4Helper.ttinclude">
+      <LastGenOutput>T4Helper.cs</LastGenOutput>
+      <Generator>TextTemplatingFileGenerator</Generator>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Clean Architecture Database Access Generator.txt">
+      <DependentUpon>Clean Architecture Database Access Generator.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </None>
+    <None Update="Clean Architecture WebAPI Generator.txt">
+      <DependentUpon>Clean Architecture WebAPI Generator.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </None>
+    <None Update="Clean Architecture WebMVC Generator.txt">
+      <DependentUpon>Clean Architecture WebMVC Generator.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </None>
+    <None Update="Create.txt">
+      <DependentUpon>Create.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="T4Helper.cs">
+      <DependentUpon>T4Helper.ttinclude</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+</Project>

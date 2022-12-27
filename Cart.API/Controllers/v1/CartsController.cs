@@ -13,8 +13,7 @@ namespace Cart.API.Controllers.v1;
 [ApiVersion("2.0")]
 
 [Authorize(Roles = RolesConst.RoleAdministrator)]
-public class CartsController : ApiControllerBase
-{
+public class CartsController : ApiControllerBase {
     [HttpGet("{id:guid}")]
     [MapToApiVersion("1.0")]
     public async Task<ActionResult<CartDto>> GetItem(Guid id)

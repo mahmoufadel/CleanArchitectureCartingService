@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Net;
 using static System.Net.Mime.MediaTypeNames;
 using Image = CleanArchitecture.Domain.ValueObjects.Image;
@@ -11,6 +12,7 @@ public class Cart : BaseEventEntity
     {
         Items = new List<CartItem>();
     }
+    [Key]
     public Guid Id { get; set; }
     public DateTime Created { get; set; }
     public DateTime Updated { get; set; }
@@ -19,14 +21,7 @@ public class Cart : BaseEventEntity
 
     public List<CartItem> Items { get; set; }
 }
-public class CartItem 
-{
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public Image Image { get; set; }
-    public Money Price { get; set; }
-    public int Quantity { get; set; }
-}
+
 /*
  Functional Requirements:
 
